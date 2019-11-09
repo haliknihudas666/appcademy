@@ -3,9 +3,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key key}) : super(key: key);
 
-class HomeScreen extends StatelessWidget {
-  var trivia = '';
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+String _trivia = '';
+
+class _HomeScreenState extends State<HomeScreen> {
+  void _refreshtrivia() {
+    setState(() => API.getTrivia().then((value) {
+          _trivia = value.text;
+        }).catchError((error) {
+          print(error);
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +45,8 @@ class HomeScreen extends StatelessWidget {
               FutureBuilder(
                 future: API.getTrivia(),
                 builder: (context, snapshot) {
-                  if(snapshot.hasData) {
-                    trivia = snapshot.data.text;
+                  if (snapshot.hasData) {
+                    _trivia = snapshot.data.text;
                   } else if (snapshot.hasError) {
                     print('error');
                   }
@@ -58,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(15),
                       child: AutoSizeText(
-                        'Did you know that $trivia',
+                        'Did you know that $_trivia',
                         style: TextStyle(fontSize: 30.0, color: Colors.white),
                       ),
                     ),
@@ -79,15 +93,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   callback: () {
                     //TODO Generate New Trivia Here or Call a Function http://numbersapi.com/#random/trivia
-
-                    API.getTrivia().then((value) {
-                      this.trivia = value.text;
-                    }
-                    ).catchError((error) {
-                      print(error);
-                    });
-                    
-                    print(this.trivia);
+                    _refreshtrivia();
+                    print(_trivia);
                   },
                   gradient: Gradients.coldLinear,
                   shadowColor: Colors.black,
