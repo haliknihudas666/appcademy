@@ -20,6 +20,12 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Text(
+                    'AppCademy',
+                    style:
+                        TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
                   SizedBox(
                     width: 300,
                     height: 400,
