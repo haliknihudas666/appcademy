@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:appcademy_hackaton/models/trivia.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 const baseUrl = "http://numbersapi.com/random/trivia?json";
 

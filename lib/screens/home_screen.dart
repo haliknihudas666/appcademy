@@ -14,11 +14,11 @@ String _trivia = '';
 
 class _HomeScreenState extends State<HomeScreen> {
   void _refreshtrivia() {
-    setState(() => API.getTrivia().then((value) {
-          _trivia = value.text;
-        }).catchError((error) {
-          print(error);
-        }));
+    API.getTrivia().then((value) {
+      setState(() => _trivia = value.text);
+    }).catchError((error) {
+      print(error);
+    });
   }
 
   @override
