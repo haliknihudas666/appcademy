@@ -1,7 +1,7 @@
 class Post {
   final String text;
-  final String number;
-  final String found;
+  final int number;
+  final bool found;
   final String type;
 
   Post({this.text, this.number, this.found, this.type});

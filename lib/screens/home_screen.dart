@@ -1,10 +1,11 @@
+import 'package:appcademy_hackaton/utils/API.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
+
 class HomeScreen extends StatelessWidget {
-  final trivia =
-      'Mabaho pranella shonga kasi ugmas thunder jowa chipipay shongaers bigalou.';
+  var trivia = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,17 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              FutureBuilder(
+                future: API.getTrivia(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData) {
+                    trivia = snapshot.data.text;
+                  } else if (snapshot.hasError) {
+                    print('error');
+                  }
+                  return Text('');
+                },
+              ),
               Text(
                 'AppCademy',
                 style: TextStyle(
@@ -67,7 +79,15 @@ class HomeScreen extends StatelessWidget {
                   ),
                   callback: () {
                     //TODO Generate New Trivia Here or Call a Function http://numbersapi.com/#random/trivia
-                    print('pressed');
+
+                    API.getTrivia().then((value) {
+                      this.trivia = value.text;
+                    }
+                    ).catchError((error) {
+                      print(error);
+                    });
+                    
+                    print(this.trivia);
                   },
                   gradient: Gradients.coldLinear,
                   shadowColor: Colors.black,
